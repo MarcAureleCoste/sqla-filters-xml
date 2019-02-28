@@ -1,0 +1,13 @@
+<filters>
+    <node type="and">
+        <data>
+            <node type="operator">
+                <data>
+                    <attribute>name</attribute>
+                    <operator>eq</operator>
+                    <value>Toto</value>
+                </data>
+            </node>
+        </data>
+    </node>
+</filters>
