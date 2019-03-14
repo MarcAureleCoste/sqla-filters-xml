@@ -34,10 +34,38 @@ class TestParserBase(object):
 class TestXMLEquality(TestParserBase):
     def setup_class(self):
         self._resources['eq'] = 'resources/eq/eq.xml'
+        self._resources['noteq'] = 'resources/eq/noteq.xml'
         self._resources['eq_rel'] = 'resources/eq/eq_rel.xml'
+        self._resources['noteq_rel'] = 'resources/eq/noteq_rel.xml'
 
     def test_01_eq(self):
         parser = self._get_parser('eq')
         assert isinstance(parser.tree.root, AndNode)
         assert len(parser.tree.root.childs) == 1
         assert isinstance(parser.tree.root.childs[0], EqNode)
+        assert parser.tree.root.childs[0].attribute == 'name'
+        assert parser.tree.root.childs[0].value == 'Toto'
+
+    def test_02_noteq(self):
+        parser = self._get_parser('noteq')
+        assert isinstance(parser.tree.root, AndNode)
+        assert len(parser.tree.root.childs) == 1
+        assert isinstance(parser.tree.root.childs[0], NotEqNode)
+        assert parser.tree.root.childs[0].attribute == 'name'
+        assert parser.tree.root.childs[0].value == 'Toto'
+
+    def test_03_eq_rel(self):
+        parser = self._get_parser('eq_rel')
+        assert isinstance(parser.tree.root, AndNode)
+        assert len(parser.tree.root.childs) == 1
+        assert isinstance(parser.tree.root.childs[0], EqNode)
+        assert parser.tree.root.childs[0].attribute == 'author.person.name'
+        assert parser.tree.root.childs[0].value == 'Toto'
+
+    def test_04_noteq_rel(self):
+        parser = self._get_parser('noteq_rel')
+        assert isinstance(parser.tree.root, AndNode)
+        assert len(parser.tree.root.childs) == 1
+        assert isinstance(parser.tree.root.childs[0], NotEqNode)
+        assert parser.tree.root.childs[0].attribute == 'author.person.name'
+        assert parser.tree.root.childs[0].value == 'Toto'
